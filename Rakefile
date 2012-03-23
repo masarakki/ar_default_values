@@ -17,10 +17,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "ar_default_values"
   gem.homepage = "http://github.com/masarakki/ar_default_values"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{ActiveRecord with default values}
+  gem.description = %Q{ActiveRecord with default values}
   gem.email = "masaki@hisme.net"
-  gem.authors = ["Yamada Masaki"]
+  gem.authors = ["masarakki"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
