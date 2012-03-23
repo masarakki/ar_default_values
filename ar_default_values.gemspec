@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "ar_default_values.gemspec",
     "lib/ar_default_values.rb",
     "spec/ar_default_values_spec.rb",
     "spec/spec_helper.rb"
