@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ar_default_values"
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["masarakki"]
-  s.date = "2012-03-23"
+  s.date = "2012-03-24"
   s.description = "ActiveRecord with default values"
   s.email = "masaki@hisme.net"
   s.extra_rdoc_files = [
@@ -28,12 +28,14 @@ Gem::Specification.new do |s|
     "ar_default_values.gemspec",
     "lib/ar_default_values.rb",
     "spec/ar_default_values_spec.rb",
-    "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+    "spec/test.sqlite3",
+    "test.sqlite3"
   ]
   s.homepage = "http://github.com/masarakki/ar_default_values"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.15"
   s.summary = "ActiveRecord with default values"
 
   if s.respond_to? :specification_version then
@@ -46,6 +48,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rdoc>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
+      s.add_development_dependency(%q<sqlite3>, [">= 0"])
     else
       s.add_dependency(%q<activesupport>, [">= 0"])
       s.add_dependency(%q<activerecord>, [">= 0"])
@@ -53,6 +56,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rdoc>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<sqlite3>, [">= 0"])
     end
   else
     s.add_dependency(%q<activesupport>, [">= 0"])
@@ -61,6 +65,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rdoc>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<sqlite3>, [">= 0"])
   end
 end
 
