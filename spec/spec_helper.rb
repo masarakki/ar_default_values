@@ -8,5 +8,7 @@ require 'ar_default_values'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
-  
+
 end
+
+ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'spec/test.sqlite3')

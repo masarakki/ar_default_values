@@ -13,4 +13,5 @@ group :development do
   gem "rdoc"
   gem "bundler"
   gem "jeweler"
+  gem "sqlite3"
 end
