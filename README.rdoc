@@ -1,9 +1,24 @@
 = ar_default_values
+initialize with default_values
 
-Description goes here.
+== sample
+you can specify default values with hash:
+
+  class Book < ActiveRecord::Base
+    default_values rating: 'r18', type: 'comic' do
+      t = Time.now
+      { :released_at => t, :edition_updated_at => t }
+    end
+  end
+
+  book = Book.new
+  book.rating # => "r18"
+  book.type # => "comic"
+  book.title # => nil
+  book.released_at == book.edition_updated_at # => true
 
 == Contributing to ar_default_values
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
 * Fork the project.
@@ -14,6 +29,6 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2012 Yamada Masaki. See LICENSE.txt for
+Copyright (c) 2012 masarakki. See LICENSE.txt for
 further details.
 

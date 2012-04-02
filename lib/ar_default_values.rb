@@ -9,12 +9,7 @@ require 'active_record'
 # you can specify default values with hash:
 #
 #  class Book < ActiveRecord::Base
-#    default_values do
-#      {
-#        :rating => 'r18',
-#        :type => 'comic'
-#      }
-#    end
+#    default_values rating: 'r18', type: 'comic'
 #  end
 #
 #  book = Book.new
@@ -23,15 +18,15 @@ require 'active_record'
 #  book.title # => nil
 #
 # you can use instance values with lambda:
-#
 #  class Book < ActiveRecord::Base
-#    default_values do
-#      lambda do
-#        {
-#          :type => 'comic',
-#          :released_at => Time.now
-#        }
-#      end
+#    default_values type: 'comic', released_at: lambda { Time.now }
+#  end
+#
+# or with block:
+#  class Book < ActiveRecord::Base
+#    default_values type: 'comic' do
+#      t = Time.now
+#      {released_at: t, edition_updated_at: t}
 #    end
 #  end
 #
@@ -39,19 +34,29 @@ require 'active_record'
 #  # wait 10 sec
 #  book2 = Book.new
 #  book1.release_at == book2.release_at # => false
+#  book1.released_at == book1.edition_updated_at # => true
 #
 module ActiveRecord
   module DefaultValue
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def default_values(&block)
+      def default_values(defaults = {}, &block)
         define_method(:initialize_with_default_values) do |*attributes, &inner_block|
-          hash_or_lambda = block.call
-          hash_or_lambda = hash_or_lambda.call if hash_or_lambda.is_a? Proc
-          attributes[0] = hash_or_lambda.merge(attributes.first || {})
+          defaults = defaults.merge(block.call) if block_given?
+          defaults = Hash[defaults.each_pair.map{ |key, value| [key, value.kind_of?(Proc) ? value.call : value]}]
+          sanitized_defaults = sanitize_for_mass_assignment(defaults)
+          protected_defaults = defaults.reject do |key, value|
+            sanitized_defaults.has_key?(key)
+          end
+
+          attributes[0] = sanitized_defaults.merge(attributes.first || {})
           initialize_without_default_values(*attributes, &inner_block)
+          protected_defaults.each_pair do |key, value|
+            self.send("#{key}=", value)
+          end
         end
+
         alias_method_chain :initialize, :default_values
       end
     end
