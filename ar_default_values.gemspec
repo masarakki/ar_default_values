@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ar_default_values"
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["masarakki"]
-  s.date = "2012-03-24"
+  s.date = "2012-04-02"
   s.description = "ActiveRecord with default values"
   s.email = "masaki@hisme.net"
   s.extra_rdoc_files = [
