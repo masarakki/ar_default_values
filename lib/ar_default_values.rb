@@ -45,10 +45,14 @@ module ActiveRecord
         define_method(:initialize_with_default_values) do |*attributes, &inner_block|
           defaults = defaults.merge(block.call) if block_given?
           defaults = Hash[defaults.each_pair.map{ |key, value| [key, value.kind_of?(Proc) ? value.call : value]}]
-          sanitized_defaults = sanitize_for_mass_assignment(defaults)
-          protected_defaults = defaults.reject do |key, value|
-            sanitized_defaults.has_key?(key)
+          authorizer = self.mass_assignment_authorizer(nil)
+
+          parted_defaults = defaults.partition do |key, value|
+            authorizer.deny?(key)
           end
+
+          sanitized_defaults = Hash[parted_defaults[1]]
+          protected_defaults = Hash[parted_defaults[0]]
 
           attributes[0] = sanitized_defaults.merge(attributes.first || {})
           initialize_without_default_values(*attributes, &inner_block)

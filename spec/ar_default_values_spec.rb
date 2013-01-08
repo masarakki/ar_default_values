@@ -15,6 +15,12 @@ class Book2 < ActiveRecord::Base
   end
 end
 
+class Book3 < ActiveRecord::Base
+  self.table_name = :books
+  attr_accessible :price
+  default_values price: 0, edition: 1, released_at: -> { Time.now }
+end
+
 describe "ArDefaultValues" do
   subject { @sample }
   describe :fixed_default_values do
@@ -70,5 +76,13 @@ describe "ArDefaultValues" do
       @target = Book2.new
     end
     its(:released_at) { should_not eq @target.released_at }
+  end
+
+  describe :both_attr_accessible_and_attr_protected do
+    before do
+      @sample = Book3.new(:price => 150)
+    end
+    its(:price) { should == 150 }
+    its(:edition) { should == 1 }
   end
 end
