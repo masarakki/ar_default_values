@@ -45,19 +45,11 @@ module DefaultValues
       define_method(:initialize_with_default_values) do |*attributes, &inner_block|
         defaults = defaults.merge(block.call) if block_given?
         defaults = Hash[defaults.each_pair.map{ |key, value| [key, value.kind_of?(Proc) ? value.call : value]}]
-        authorizer = self.mass_assignment_authorizer(nil)
 
-        parted_defaults = defaults.partition do |key, value|
-          authorizer.deny?(key)
-        end
-
-        sanitized_defaults = Hash[parted_defaults[1]]
-        protected_defaults = Hash[parted_defaults[0]]
-
-        attributes[0] = sanitized_defaults.merge(attributes.first || {})
         initialize_without_default_values(*attributes, &inner_block)
-        protected_defaults.each_pair do |key, value|
-          self.send("#{key}=", value)
+
+        defaults.each_pair do |key, value|
+          write_attribute(key, value) unless attribute_present?(key)
         end
       end
 
