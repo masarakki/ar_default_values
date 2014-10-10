@@ -1,4 +1,4 @@
-require "ar_default_values/version"
+require 'ar_default_values/version'
 require 'active_support'
 require 'active_record'
 
@@ -44,7 +44,7 @@ module DefaultValues
     def default_values(defaults = {}, &block)
       define_method(:initialize_with_default_values) do |*attributes, &inner_block|
         defaults = defaults.merge(block.call) if block_given?
-        defaults = Hash[defaults.each_pair.map{ |key, value| [key, value.kind_of?(Proc) ? value.call : value]}]
+        defaults = Hash[defaults.each_pair.map { |key, value| [key, value.is_a?(Proc) ? value.call : value] }]
 
         initialize_without_default_values(*attributes, &inner_block)
 
