@@ -1,12 +1,12 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'rails_helper'
 
-class Book < ActiveRecord::Base
+class Book1 < Book
   attr_protected :edition if Rails.version.to_i < 4
 
   default_values price: 0, edition: 1, released_at: -> { Time.now }
 end
 
-class Book2 < ActiveRecord::Base
+class Book2 < Book
   self.table_name = :books
   attr_protected :edition if Rails.version.to_i < 4
   default_values price: 0, edition: 1 do
@@ -15,7 +15,7 @@ class Book2 < ActiveRecord::Base
   end
 end
 
-class Book3 < ActiveRecord::Base
+class Book3 < Book
   self.table_name = :books
   attr_accessible :price if Rails.version.to_i < 4
   default_values price: 0, edition: 1, released_at: -> { Time.now }
@@ -28,7 +28,7 @@ describe DefaultValues do
   describe 'fixed default_values' do
     before { allow(Time).to receive(:now).and_return(now) }
     context 'without attributes' do
-      subject { Book.new }
+      subject { Book1.new }
       its(:title) { is_expected.to be_nil }
       its(:price) { is_expected.to eq 0 }
       its(:edition) { is_expected.to eq 1 }
@@ -36,7 +36,7 @@ describe DefaultValues do
     end
 
     context 'with attributes' do
-      subject { Book.new(price: 100) }
+      subject { Book1.new(price: 100) }
       its(:title) { is_expected.to be_nil }
       its(:price) { is_expected.to eq 100 }
       its(:edition) { is_expected.to eq 1 }
@@ -44,7 +44,7 @@ describe DefaultValues do
     end
     context 'with block' do
       subject do
-        Book.new do |t|
+        Book1.new do |t|
           t.title = 'foo'
         end
       end
@@ -56,7 +56,7 @@ describe DefaultValues do
 
     if Rails.version.to_i < 4
       describe 'consider attr_protected' do
-        subject { Book.new(edition: 3) }
+        subject { Book1.new(edition: 3) }
         its(:title) { is_expected.to be_nil }
         its(:price) { is_expected.to eq 0 }
         its(:edition) { is_expected.to eq 1 }

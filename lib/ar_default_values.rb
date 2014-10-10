@@ -1,6 +1,5 @@
 require 'ar_default_values/version'
-require 'active_support'
-require 'active_record'
+require 'ar_default_values/railtie' if defined?(Rails)
 
 #
 # = ActiveRecord::DefaultValue
@@ -57,5 +56,3 @@ module DefaultValues
     end
   end
 end
-
-ActiveRecord::Base.send(:include, DefaultValues)
