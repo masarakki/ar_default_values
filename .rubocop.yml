@@ -1,6 +1,13 @@
+AllCops:
+  RunRailsCops: true
+  Excludes:
+    - spec/dummy/db/schema.rb
+    - vendor/bundle/**/*
 Metrics/LineLength:
   Enabled: false
 Style/Documentation:
+  Enabled: false
+Style/FileName:
   Enabled: false
 Style/RegexpLiteral:
   Enabled: false
