@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ar_default_values/version'
+require 'default_values/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'ar_default_values'
