@@ -2,6 +2,8 @@ ENV['RAILS_ENV'] = 'test'
 require 'spec_helper'
 require 'rspec/its'
 require 'pry'
+require 'coveralls'
+Coveralls.wear!
 require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 require 'rspec/rails'
 
