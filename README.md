@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/masarakki/ar_default_values.svg?branch=master)](https://travis-ci.org/masarakki/ar_default_values)
 [![Dependency Status](https://gemnasium.com/masarakki/ar_default_values.svg)](https://gemnasium.com/masarakki/ar_default_values)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/masarakki/ar_default_values/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/masarakki/ar_default_values/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/masarakki/ar_default_values/badge.png)](https://coveralls.io/r/masarakki/ar_default_values)
+[![Coverage Status](https://coveralls.io/repos/masarakki/ar_default_values/badge.png?branch=master)](https://coveralls.io/r/masarakki/ar_default_values?branch=master)
 
 # DefaultValues
 
