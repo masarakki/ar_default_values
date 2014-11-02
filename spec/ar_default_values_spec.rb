@@ -7,7 +7,6 @@ class Book1 < Book
 end
 
 class Book2 < Book
-  self.table_name = :books
   attr_protected :edition if Rails.version.to_i < 4
   default_values price: 0, edition: 1 do
     t = Time.now
@@ -16,17 +15,20 @@ class Book2 < Book
 end
 
 class Book3 < Book
-  self.table_name = :books
   attr_accessible :price if Rails.version.to_i < 4
   default_values price: 0, edition: 1, released_at: -> { Time.now }
+end
+
+class Book4 < Book
+  default_values released_at: Time.now
 end
 
 describe DefaultValues do
   let!(:now) { Time.at(Time.now.to_i) }
 
-  subject { @sample }
   describe 'fixed default_values' do
     before { allow(Time).to receive(:now).and_return(now) }
+
     context 'without attributes' do
       subject { Book1.new }
       its(:title) { is_expected.to be_nil }
@@ -42,6 +44,7 @@ describe DefaultValues do
       its(:edition) { is_expected.to eq 1 }
       its(:released_at) { is_expected.to eq now }
     end
+
     context 'with block' do
       subject do
         Book1.new do |t|
@@ -66,12 +69,23 @@ describe DefaultValues do
   end
 
   describe 'instance values with block' do
-    subject { Book2.new }
-    before do
-      sleep 1
-      @target = Book2.new
+    context 'released_at: -> { Time.now }' do
+      subject { Book2.new }
+      before do
+        @target = Book2.new
+        sleep 1
+      end
+      its(:released_at) { is_expected.not_to eq @target.released_at }
     end
-    its(:released_at) { is_expected.not_to eq @target.released_at }
+
+    context 'released_at: Time.now' do
+      subject { Book4.new }
+      before do
+        @target = Book4.new
+        sleep 1
+      end
+      its(:released_at) { is_expected.to eq @target.released_at }
+    end
   end
 
   context 'both attr_accessible and attr_protected' do
